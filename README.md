@@ -1,4 +1,14 @@
-# pwa
+# PWA - Progressive Web App by Thomas NGUYEN
+
+## Fonctionnalités disponibles
+
+- caméra avec prise de photo et stockage en local dans le navigateur
+- géolocalisation
+- notifications et vibration sur le téléphone
+- mode hors ligne
+- passer un appel téléphonique
+- chat en temps réel
+
 
 ## Project setup
 ```
@@ -14,6 +24,3 @@ npm run serve
 ```
 npm run build
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).

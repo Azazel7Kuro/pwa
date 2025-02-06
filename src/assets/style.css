@@ -1,62 +1,109 @@
 #app {
-    font-family: "Century Gothic", sans-serif;
+    font-family: "Poppins", sans-serif;
     font-weight: bold;
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow-x: hidden;
 }
 .navbar {
+    height: 50vh;
     display: flex;
-    justify-content: space-between;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 1)),
+    url("@/assets/JARVIS.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: ghostwhite;
+}
+
+.infos {
+    display: flex;
+    justify-content: center;
     align-items: center;
-    padding: 1rem 2rem;
-    background-color: #670038;
-    color: white;
-}
-
-.navbar .logo {
-    font-size: 1.5rem;
+    text-align: center;
+    width: 100%;
+    font-size: 4em;
     font-weight: bold;
+    opacity: 0.8;
 }
 
-.navbar nav ul {
-    list-style: none;
+@media (min-width: 768px) {
+    .infos {
+        font-size: 6em; /* Adjust font size for medium screens */
+    }
+}
+
+@media (min-width: 1024px) {
+    .infos {
+        font-size: 8em; /* Adjust font size for larger screens */
+    }
+}
+
+.battery {
     display: flex;
-    gap: 1.5rem;
-    margin: 0;
-    padding: 0;
+    justify-content: right;
+    width: 100%;
+    position: absolute;
 }
 
-.navbar nav ul li a {
-    text-decoration: none;
-    color: white;
-    font-weight: 500;
-    transition: color 0.3s;
+.title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    font-size: 2em;
+    font-weight: bold;
+    opacity: 0.8;
 }
 
-.navbar nav ul li a:hover {
-    color: #ffffffa0;
+.line_center {
+    display: flex;
+    justify-content: center;
 }
-
-/* Section Styles */
-main {
-    padding: 2rem;
+.line{
+    height: 1px;
+    width: 70%;
+    background-color: white;
 }
 
 .tool-section {
     margin: 2rem 0;
     padding: 1rem;
-    border: 1px solid #ccc;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .tool-section h2 {
-    color: #670038;
+    color: #024d64;
     margin-bottom: 1rem;
 }
 
+.section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    color: white;
+}
+
+.triple_btn {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 button {
     padding: 0.5rem 1rem;
     margin: 0.5rem;
-    background-color: #670038;
+    background-color: #024d64;
     color: white;
     border: none;
     border-radius: 10px;
@@ -65,7 +112,7 @@ button {
 }
 
 button:hover {
-    background-color: #670050;
+    background-color: #024d64;
 }
 
 button:disabled {
@@ -82,4 +129,48 @@ button:disabled {
     margin: 0.5rem;
     border: 1px solid #ccc;
     border-radius: 8px;
+}
+
+.battery-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: bold;
+}
+
+.battery-container {
+    width: 50px;
+    height: 20px;
+    border: 2px solid #333;
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+}
+
+.battery-level {
+    height: 100%;
+    transition: width 0.5s ease-in-out;
+}
+
+.low-battery {
+    color: darkred;
+}
+
+.medium-battery {
+    color: orange;
+}
+
+.high-battery {
+    color: green;
+}
+
+.battery-indicator span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.battery-indicator span > span {
+    color: yellow;
+    font-size: 1.2em;
 }

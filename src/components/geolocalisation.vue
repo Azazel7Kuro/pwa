@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <h3>Géolocalisation</h3>
-    <p>Appuyez sur le bouton ci-dessous pour obtenir votre position actuelle :</p>
+  <div class="section">
     <button @click="getLocation">Obtenir ma position</button>
     <div v-if="location">
       <p><strong>Latitude :</strong> {{ location.latitude }}</p>
