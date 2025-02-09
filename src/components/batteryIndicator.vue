@@ -9,49 +9,54 @@
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      batteryLevel: 100,
-      charging: false,
-    };
-  },
-  computed: {
-    batteryColor() {
-      if (this.batteryLevel > 50) return "green";
-      if (this.batteryLevel > 20) return "orange";
+<script lang="ts">
+import { defineComponent, ref, computed, onMounted } from "vue";
+
+export default defineComponent({
+  setup() {
+    const batteryLevel = ref<number>(100);
+    const charging = ref<boolean>(false);
+
+    const batteryColor = computed<string>(() => {
+      if (batteryLevel.value > 50) return "green";
+      if (batteryLevel.value > 20) return "orange";
       return "red";
-    },
-    batteryClass() {
-      return {
-        "low-battery": this.batteryLevel <= 20,
-        "medium-battery": this.batteryLevel > 20 && this.batteryLevel <= 50,
-        "high-battery": this.batteryLevel > 50,
-      };
-    },
-  },
-  methods: {
-    async getBatteryStatus() {
-      if ("getBattery" in navigator) {
-        const battery = await navigator.getBattery();
-        this.batteryLevel = Math.round(battery.level * 100);
-        this.charging = battery.charging;
+    });
+
+    const batteryClass = computed<Record<string, boolean>>(() => ({
+      "low-battery": batteryLevel.value <= 20,
+      "medium-battery": batteryLevel.value > 20 && batteryLevel.value <= 50,
+      "high-battery": batteryLevel.value > 50,
+    }));
+
+    const getBatteryStatus = async () => {
+      if ('getBattery' in navigator) {
+        const battery = await (navigator as any).getBattery();
+        batteryLevel.value = Math.round(battery.level * 100);
+        charging.value = battery.charging;
 
         battery.addEventListener("levelchange", () => {
-          this.batteryLevel = Math.round(battery.level * 100);
+          batteryLevel.value = Math.round(battery.level * 100);
         });
 
         battery.addEventListener("chargingchange", () => {
-          this.charging = battery.charging;
+          charging.value = battery.charging;
         });
       } else {
         console.warn("L'API Battery Status n'est pas supportée.");
       }
-    },
+    };
+
+    onMounted(() => {
+      getBatteryStatus();
+    });
+
+    return {
+      batteryLevel,
+      charging,
+      batteryColor,
+      batteryClass,
+    };
   },
-  mounted() {
-    this.getBatteryStatus();
-  },
-};
+});
 </script>

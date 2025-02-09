@@ -9,31 +9,38 @@
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      location: null,
-      error: null,
-    };
-  },
-  methods: {
-    getLocation() {
+<script lang="ts">
+import { defineComponent, ref } from "vue";
+
+export default defineComponent({
+  setup() {
+    const location = ref<{ latitude: number; longitude: number } | null>(null);
+    const error = ref<string | null>(null);
+
+    const getLocation = () => {
       if ("geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition(
-            position => {
-              this.location = position.coords;
-              this.error = null;
+            (position) => {
+              location.value = {
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude,
+              };
+              error.value = null;
             },
-            error => {
-              this.error = error.message;
+            (err) => {
+              error.value = err.message;
             }
         );
       } else {
-        this.error = "La géolocalisation n'est pas prise en charge par ce navigateur.";
+        error.value = "La géolocalisation n'est pas prise en charge par ce navigateur.";
       }
-    },
-  },
-};
-</script>
+    };
 
+    return {
+      location,
+      error,
+      getLocation,
+    };
+  },
+});
+</script>

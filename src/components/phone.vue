@@ -9,28 +9,35 @@
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      phoneNumber: "",
-      canCall: false,
+<script lang="ts">
+import { defineComponent, ref, onMounted } from "vue";
+
+export default defineComponent({
+  setup() {
+    const phoneNumber = ref<string>("");
+    const canCall = ref<boolean>(false);
+
+    const checkCallCapability = () => {
+      canCall.value = "navigator" in window && "canShare" in navigator;
     };
-  },
-  mounted() {
-    this.checkCallCapability();
-  },
-  methods: {
-    checkCallCapability() {
-      this.canCall = "navigator" in window && "canShare" in navigator; // Vérifie si l'appareil est compatible
-    },
-    makeCall() {
-      if (this.canCall) {
-        window.location.href = `tel:${this.phoneNumber}`;
+
+    const makeCall = () => {
+      if (canCall.value) {
+        window.location.href = `tel:${phoneNumber.value}`;
       } else {
         alert("Votre appareil ne prend pas en charge les appels téléphoniques.");
       }
-    },
+    };
+
+    onMounted(() => {
+      checkCallCapability();
+    });
+
+    return {
+      phoneNumber,
+      canCall,
+      makeCall,
+    };
   },
-};
+});
 </script>
